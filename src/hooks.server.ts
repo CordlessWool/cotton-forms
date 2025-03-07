@@ -1,4 +1,5 @@
-import { sequence, type Handle } from '@sveltejs/kit';
+import { sequence } from '@sveltejs/kit/hooks';
+import type { Handle } from '@sveltejs/kit';
 import { i18n } from '$lib/i18n';
 const handleParaglide: Handle = i18n.handle();
 
@@ -28,4 +29,4 @@ const corsHandler: Handle = async ({ event, resolve }) => {
 	return response;
 };
 
-export const handle: Handle = sequence(handleParaglide);
+export const handle: Handle = sequence(handleParaglide, corsHandler);
