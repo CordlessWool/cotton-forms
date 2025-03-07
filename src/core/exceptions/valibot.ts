@@ -1,0 +1,1 @@
+export const VALI_ERROR_TYPE_NAME = "VALI_ERROR";
