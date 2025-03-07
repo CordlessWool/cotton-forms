@@ -19,6 +19,14 @@ export default defineConfig({
 			outdir: './src/lib/paraglide'
 		})
 	],
+	optimizeDeps: {
+		esbuildOptions: {
+			target: 'esnext'
+		}
+	},
+	build: {
+		target: 'esnext'
+	},
 	test: {
 		workspace: [
 			{

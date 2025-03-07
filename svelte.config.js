@@ -11,6 +11,10 @@ const config = {
 		adapter: adapter(),
 		csrf: {
 			checkOrigin: false
+		},
+		alias: {
+			$core: './src/core',
+			$service: './src/service'
 		}
 	}
 };
