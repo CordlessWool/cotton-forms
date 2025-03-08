@@ -1,16 +1,8 @@
-import { encodeBase32LowerCaseNoPadding, encodeHexLowerCase } from '@oslojs/encoding';
+import { encodeHexLowerCase } from '@oslojs/encoding';
 import { sha256 } from '@oslojs/crypto/sha2';
 import { collection } from '$lib/server/db';
 import type { NewSession, Session } from '$core/models/session';
 import { ObjectId } from 'bson';
-import type { Cookie } from 'elysia';
-
-export function generateSessionToken(): string {
-	const bytes = new Uint8Array(20);
-	crypto.getRandomValues(bytes);
-	const token = encodeBase32LowerCaseNoPadding(bytes);
-	return token;
-}
 
 export async function createSession(
 	token: string,

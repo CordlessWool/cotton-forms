@@ -1,4 +1,11 @@
 {
 	"$schema": "https://inlang.com/schema/inlang-message-format",
-	"hello_world": "Hello, {name} from en!"
+	"signup": "Sign Up",
+	"signin": "Sign In",
+	"verify": "verify",
+	"verification_headline": "Verification",
+	"verification_description": "Please enter the One-Time Password (OTP) sent to your email address to complete your registration.",
+	"verification_resend": "Resend OTP",
+	"verification_sending": "Sending OTP",
+	"verification_resend_failed": "Failed to resend OTP"
 }

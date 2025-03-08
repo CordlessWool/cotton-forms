@@ -41,7 +41,7 @@
 		@apply grid gap-0;
 	}
 	label {
-		@apply pl-1 text-zinc-600;
+		@apply pl-1 text-sm text-zinc-600;
 	}
 	small {
 		@apply pl-1 text-zinc-600;

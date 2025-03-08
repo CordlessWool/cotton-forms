@@ -1,5 +1,11 @@
 import { collection } from '$lib/server/db.js';
-import { type User, type UserId, type NewUser, type UserTeam } from '$core/models/user';
+import {
+	type User,
+	type UserId,
+	type NewUser,
+	type UserTeam,
+	type UserDatabase
+} from '$core/models/user';
 import { ObjectId } from 'mongodb';
 import { mongoDbToData } from './helper';
 import type { APIKey, NewAPIKey } from '$core/models/apiKey';
@@ -40,19 +46,21 @@ export const addUserToTeam = async (data: UserTeam, userId: UserId) => {
 	}
 };
 
-export const createUser = async ({ id, ...newUser }: NewUser): Promise<UserId> => {
-	const result = await collection.user.insertOne({
+export const createUser = async ({ id, ...newUser }: NewUser): Promise<User> => {
+	const user: UserDatabase = {
 		_id: new ObjectId(id),
 		...newUser,
 		createdAt: new Date(),
 		updatedAt: new Date()
-	});
+	};
+
+	const result = await collection.user.insertOne(user);
 
 	if (!result.insertedId) {
 		throw new Error('Failed to create user');
 	}
 
-	return result.insertedId.toString();
+	return mongoDbToData(user);
 };
 
 export const getAPIKeyByToken = async (token: string): Promise<APIKey | null> => {

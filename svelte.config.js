@@ -13,8 +13,8 @@ const config = {
 			checkOrigin: false
 		},
 		alias: {
-			$core: './src/core',
-			$service: './src/service'
+			$core: 'src/core',
+			$service: 'src/service'
 		}
 	}
 };

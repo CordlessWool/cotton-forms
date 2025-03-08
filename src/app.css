@@ -95,7 +95,7 @@ h3,
 h4,
 h5,
 h6 {
-	@apply mb-3 break-words;
+	@apply mt-1 mb-3;
 }
 
 /* Change Autocomplete styles in Chrome*/

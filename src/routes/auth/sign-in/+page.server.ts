@@ -30,9 +30,9 @@ export const actions: Actions = {
 		}
 
 		const newOTP = defineNewOTPFromUser(user);
-		await createOTP(newOTP);
+		const OTPId = await createOTP(newOTP);
 		await sendVerificationMail(user.email, newOTP.token);
 
-		return redirect(301, '/auth/otp/verify');
+		return redirect(303, `/auth/otp/verify/${OTPId}`);
 	}
 };
