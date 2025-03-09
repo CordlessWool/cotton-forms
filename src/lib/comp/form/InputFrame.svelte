@@ -1,63 +1,69 @@
 <script lang="ts">
 	import type { Snippet } from 'svelte';
+	import { initFrameContext } from './context';
+	import Label from './Label.svelte';
 
 	type Props = {
 		for?: string;
 		label?: string;
 		children: Snippet;
-		info?: string | string[];
-		error?: string | string[];
+		info?: string;
+		error?: string;
 	};
 
 	const { label, children, info, error, ...props }: Props = $props();
 
-	const toString = (value: string | string[]) => {
-		if (Array.isArray(value)) {
-			return value.join(', ');
+	const context = initFrameContext();
+
+	let errors: string[] = $state(error ? [error] : []);
+
+	$effect(() => {
+		if (error) {
+			errors = [error];
+		} else {
+			errors = [];
 		}
-		return value;
-	};
+	});
+
+	context.errors.subscribe((err) => {
+		errors = Object.values(err).flat();
+	});
 </script>
 
 <div class="frame">
 	{#if label && props.for}
-		<label for={props.for}>{label}</label>
+		<Label for={props.for}>{label}</Label>
 	{/if}
 	<div class="inputs">
 		{@render children()}
 	</div>
-	{#if error}
-		<small>{toString(error)}</small>
+	{#if errors}
+		<small>{errors.join(', ')}</small>
 	{:else if info}
-		<small>{toString(info)}</small>
+		<small>{info}</small>
 	{:else}
 		<small>&nbsp;</small>
 	{/if}
 </div>
 
-<style>
+<style lang="postcss">
 	@reference "tailwindcss/theme";
 	.frame {
 		@apply grid gap-0;
 	}
-	label {
-		@apply pl-1 text-sm text-zinc-600;
-	}
+
 	small {
 		@apply pl-1 text-zinc-600;
 	}
 
 	:global(.dark) {
-		label {
-			@apply text-zinc-400;
-		}
 		small {
 			@apply text-zinc-400;
 		}
 
 		.inputs {
-			@apply bg-zinc-800;
-			@apply border-zinc-800 focus-within:border-teal-600;
+			@apply bg-zinc-700;
+			@apply border-zinc-700 focus-within:border-teal-600;
 		}
 	}
 

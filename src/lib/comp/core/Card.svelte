@@ -3,13 +3,15 @@
 	import type { HTMLAttributes } from 'svelte/elements';
 	let {
 		children,
+		borderless = false,
 		...props
 	}: {
 		children: Snippet;
+		borderless?: boolean;
 	} & HTMLAttributes<HTMLDivElement> = $props();
 </script>
 
-<div {...props}>
+<div {...props} class:borderless>
 	{@render children()}
 </div>
 
@@ -20,7 +22,11 @@
 		@apply rounded-md border-2 border-zinc-300 bg-transparent p-7 shadow-xs;
 	}
 
-	:global(.dark) {
+	:global(.dark) div {
 		@apply dark:border-zinc-600;
+	}
+
+	div.borderless {
+		@apply border-transparent;
 	}
 </style>

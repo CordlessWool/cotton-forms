@@ -1,8 +1,8 @@
 <script>
-	let { value = $bindable(), ...props } = $props();
+	let { value = $bindable(), type = 'text', ...props } = $props();
 </script>
 
-<input bind:value {...props} />
+<input bind:value {type} {...props} />
 
 <style>
 	@reference "tailwindcss/theme";

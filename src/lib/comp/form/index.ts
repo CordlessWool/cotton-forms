@@ -5,3 +5,5 @@ export { default as Button } from './Button.svelte';
 export { default as KeyInput } from './KeyInput.svelte';
 export { default as Toggle } from './Toggle.svelte';
 export { default as ThemeHiddenInput } from './ThemeHiddenInput.svelte';
+export { default as SuperInput } from './InputSuper.svelte';
+export { default as Form } from './Form.svelte';
