@@ -1,16 +1,15 @@
 <script lang="ts">
-	import { Card, InfoItem } from '$lib/comp/core';
-	import { Button, ButtonGroup } from '$lib/comp/form';
+	import { Card, InfoItem, Anchor } from '$lib/comp/core';
+	import { Button } from '$lib/comp/form';
 	import * as m from '$lib/paraglide/messages';
-	import { FileText, Plus, SquareChartGantt } from 'lucide-svelte';
+	import { FileText, Plus } from 'lucide-svelte';
 	import type { PageData } from './$types';
 
 	import { CopyButton, HeadlineCard } from '$lib/comp/modules';
 	import CreateFormCard from './CreateFormCard.svelte';
 	import type { FormDefinition } from '$core/models/form';
 	import ItemList from '$lib/comp/core/ItemList.svelte';
-	import { name } from '$lib/paraglide/messages/en';
-	import { Ref } from '@sinclair/typebox';
+	import ButtonGroup from '$lib/comp/form/ButtonGroup.svelte';
 
 	interface NewForm {
 		id: string;
@@ -55,14 +54,16 @@
 		{:else}
 			{@const { name, key, description } = def}
 			<Card>
-				<div class="grid-cols-[1fr auto] grid grid-flow-col">
+				<div class="grid-cols-[1fr min] grid grid-flow-col">
 					<ItemList>
 						<InfoItem label={m.name()} ref={name}>{name}</InfoItem>
 						<InfoItem label={m.key()}>{key}<CopyButton content={key} /></InfoItem>
 					</ItemList>
-					<div>
-						<a href="/form/{key}" title={m.forms_open()}><FileText /></a>
-					</div>
+					<ButtonGroup vertical>
+						<Anchor button href="/form/{key}" title={m.forms_open()}>
+							<FileText />
+						</Anchor>
+					</ButtonGroup>
 					{#if description}
 						<ItemList class="col-span-2">
 							<InfoItem label={m.description()} ref={description}>{description}</InfoItem>

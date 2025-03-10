@@ -2,16 +2,28 @@
 	import type { Snippet } from 'svelte';
 	import type { HTMLAttributes } from 'svelte/elements';
 
-	let { children, ...props }: { children: Snippet } & HTMLAttributes<HTMLDivElement> = $props();
+	let {
+		children,
+		vertical,
+		...props
+	}: { children: Snippet; vertical?: boolean } & HTMLAttributes<HTMLDivElement> = $props();
 </script>
 
-<div {...props}>
+<div class:vertical {...props}>
 	{@render children()}
 </div>
 
 <style lang="postcss">
 	@reference "tailwindcss/theme";
 	div {
-		@apply flex flex-row gap-2;
+		@apply grid items-start justify-normal justify-items-end gap-2;
+	}
+
+	div:not(.vertical) {
+		@apply auto-cols-max grid-flow-col grid-rows-1;
+	}
+
+	div:vertical {
+		@apply grid-flow-row auto-rows-auto grid-cols-1;
 	}
 </style>
