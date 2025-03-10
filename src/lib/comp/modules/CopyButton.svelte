@@ -1,15 +1,17 @@
 <script lang="ts">
 	import { Copy } from 'lucide-svelte';
 	import { Button } from '../form';
-	import type { ComponentProps } from 'svelte';
+	import type { ComponentProps, Snippet } from 'svelte';
 
 	type Props = {
 		content: string;
-	} & Omit<ComponentProps<typeof Button>, 'children'>;
+		children?: Snippet;
+	} & Omit<ComponentProps<typeof Button>, 'children' | 'inline' | 'onclick'>;
 
-	const { content, title = 'copy', ...props }: Props = $props();
+	const { content, title = 'copy', children, ...props }: Props = $props();
 </script>
 
-<Button {...props} {title} onclick={() => navigator.clipboard.writeText(content)}>
+<Button {...props} {title} inline onclick={() => navigator.clipboard.writeText(content)}>
+	{@render children?.()}
 	<Copy />
 </Button>

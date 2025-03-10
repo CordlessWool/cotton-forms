@@ -1,14 +1,16 @@
 <script lang="ts">
-	import { Card } from '$lib/comp/core';
-	import { InputFrame, Button, ButtonGroup, SuperInput, Form, SuperTextarea } from '$lib/comp/form';
+	import { Card, InfoItem } from '$lib/comp/core';
+	import { Button, ButtonGroup } from '$lib/comp/form';
 	import * as m from '$lib/paraglide/messages';
-	import { Plus, Trash2, BookPlus } from 'lucide-svelte';
+	import { FileText, Plus, SquareChartGantt } from 'lucide-svelte';
 	import type { PageData } from './$types';
-	import { superForm } from 'sveltekit-superforms/client';
-	import { valibotClient } from 'sveltekit-superforms/adapters';
-	import { FormDefinitionSchema, type FormDefinition } from '$core/models/form';
-	import { HeadlineCard } from '$lib/comp/modules';
+
+	import { CopyButton, HeadlineCard } from '$lib/comp/modules';
 	import CreateFormCard from './CreateFormCard.svelte';
+	import type { FormDefinition } from '$core/models/form';
+	import ItemList from '$lib/comp/core/ItemList.svelte';
+	import { name } from '$lib/paraglide/messages/en';
+	import { Ref } from '@sinclair/typebox';
 
 	interface NewForm {
 		id: string;
@@ -26,6 +28,14 @@
 	const addNewFormCard = () => {
 		definedForms = [{ id: crypto.randomUUID(), new: true }, ...definedForms];
 	};
+
+	const removeForm = (id: string) => {
+		definedForms = definedForms.filter((form) => form.id !== id);
+	};
+
+	const replaceForm = (form: FormDefinition, old: NewForm) => {
+		definedForms = definedForms.map((f) => (f.id === old.id ? form : f));
+	};
 </script>
 
 <main>
@@ -37,11 +47,28 @@
 
 	{#each definedForms as def (def.id)}
 		{#if isNewForm(def)}
-			<CreateFormCard form={data.createForm} />
+			<CreateFormCard
+				form={data.createForm}
+				onremoved={() => removeForm(def.id)}
+				oncreated={(data: FormDefinition) => replaceForm(data, def)}
+			/>
 		{:else}
+			{@const { name, key, description } = def}
 			<Card>
-				{def.name}
-				{def.description}
+				<div class="grid-cols-[1fr auto] grid grid-flow-col">
+					<ItemList>
+						<InfoItem label={m.name()} ref={name}>{name}</InfoItem>
+						<InfoItem label={m.key()}>{key}<CopyButton content={key} /></InfoItem>
+					</ItemList>
+					<div>
+						<a href="/form/{key}" title={m.forms_open()}><FileText /></a>
+					</div>
+					{#if description}
+						<ItemList class="col-span-2">
+							<InfoItem label={m.description()} ref={description}>{description}</InfoItem>
+						</ItemList>
+					{/if}
+				</div>
 			</Card>
 		{/if}
 	{/each}
@@ -51,6 +78,6 @@
 	@reference "tailwindcss/theme";
 
 	main {
-		@apply grid auto-rows-min gap-3 md:grid-cols-2 xl:grid-cols-3;
+		@apply grid auto-rows-min gap-5 md:grid-cols-2 xl:grid-cols-3;
 	}
 </style>

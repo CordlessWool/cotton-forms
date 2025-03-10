@@ -41,14 +41,29 @@ export const updateFormDefinition = async (definition: FormDefinition, teamId: s
 	);
 };
 
-export const createFormDefinition = async (definition: FormDefinition, teamId: string) => {
-	await collection.formDefinition.insertOne({
+export const createFormDefinition = async (
+	{ id, ...definition }: FormDefinition,
+	teamId: string
+) => {
+	const data = {
 		...definition,
 		_id: new ObjectId(),
 		teamId,
 		createdAt: new Date(),
 		updatedAt: new Date()
-	});
+	};
+
+	const result = await collection.formDefinition.insertOne(data);
+
+	if (result.insertedId) {
+		const { _id, ...saved } = data;
+		return {
+			id: result.insertedId.toString(),
+			...saved
+		};
+	}
+
+	return null;
 };
 
 export const getFormDefinitionByKey = async (key: string) => {

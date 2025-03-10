@@ -30,10 +30,10 @@
 		@apply rounded-md focus:ring-2 focus:ring-teal-600 focus:outline-none;
 	}
 
-	/* button :global(svg) {
-		height: 1.615em;
-		width: 1.615em;
-	} */
+	button.inline :global(svg) {
+		height: 1.1em;
+		width: 1.1em;
+	}
 
 	button.inline {
 		@apply mx-1 inline rounded-xs p-0;
