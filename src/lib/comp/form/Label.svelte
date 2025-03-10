@@ -11,7 +11,7 @@
 	@reference "tailwindcss/theme";
 
 	label {
-		@apply pl-1 text-sm text-zinc-600;
+		@apply ml-1 text-sm text-zinc-600;
 	}
 
 	:global(.dark) {

@@ -53,7 +53,7 @@
 	}
 
 	small {
-		@apply pl-1 text-zinc-600;
+		@apply m-1 text-sm text-zinc-600;
 	}
 
 	:global(.dark) {
@@ -72,7 +72,7 @@
 		@apply focus-within:border-teal-400;
 
 		@apply flex flex-row flex-nowrap items-center gap-3;
-		@apply w-full px-2 py-2;
+		@apply w-full px-1 py-1;
 		@apply border-zinc-100 bg-zinc-100;
 		@apply rounded-md;
 	}

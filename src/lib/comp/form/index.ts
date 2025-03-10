@@ -7,3 +7,5 @@ export { default as Toggle } from './Toggle.svelte';
 export { default as ThemeHiddenInput } from './ThemeHiddenInput.svelte';
 export { default as SuperInput } from './InputSuper.svelte';
 export { default as Form } from './Form.svelte';
+export { default as Textarea } from './Textarea.svelte';
+export { default as SuperTextarea } from './TextareaSuper.svelte';
