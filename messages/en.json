@@ -7,5 +7,11 @@
 	"verification_description": "Please enter the One-Time Password (OTP) sent to your email address to complete your registration.",
 	"verification_resend": "Resend OTP",
 	"verification_sending": "Sending OTP",
-	"verification_resend_failed": "Failed to resend OTP"
+	"verification_resend_failed": "Failed to resend OTP",
+	"forms_overview_title": "Forms",
+	"forms_add": "Add Form",
+	"forms_create_new": "Create New Form",
+	"create": "Create",
+	"add": "Add",
+	"save": "Save"
 }

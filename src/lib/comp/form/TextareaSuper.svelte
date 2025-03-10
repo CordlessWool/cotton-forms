@@ -40,6 +40,7 @@
 	{name}
 	aria-invalid={$errors ? 'true' : undefined}
 	bind:value={$value as unknown as string | number | string[] | null | undefined}
+	errors={$errors}
 	{...$constraints}
 	{...props}
 />

@@ -1,12 +1,15 @@
 <script lang="ts">
+	import InputInfo from './InputInfo.svelte';
 	import Label from './Label.svelte';
 	import type { HTMLTextareaAttributes } from 'svelte/elements';
 
 	type Props = {
 		label?: string;
+		errors?: string[];
+		info?: string;
 	} & Omit<HTMLTextareaAttributes, 'defaultValue'>;
 
-	let { label, value = $bindable(), ...props }: Props = $props();
+	let { label, value = $bindable(), errors, info, ...props }: Props = $props();
 </script>
 
 <div>
@@ -15,6 +18,7 @@
 	{/if}
 
 	<textarea bind:value {...props}></textarea>
+	<InputInfo error={errors?.join(', ')} {info} />
 </div>
 
 <style lang="postcss">

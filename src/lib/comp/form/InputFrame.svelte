@@ -2,6 +2,7 @@
 	import type { Snippet } from 'svelte';
 	import { initFrameContext } from './context';
 	import Label from './Label.svelte';
+	import InputInfo from './InputInfo.svelte';
 
 	type Props = {
 		for?: string;
@@ -37,13 +38,7 @@
 	<div class="inputs">
 		{@render children()}
 	</div>
-	{#if errors}
-		<small>{errors.join(', ')}</small>
-	{:else if info}
-		<small>{info}</small>
-	{:else}
-		<small>&nbsp;</small>
-	{/if}
+	<InputInfo error={errors.join(', ')} {info} />
 </div>
 
 <style lang="postcss">
@@ -52,15 +47,7 @@
 		@apply grid gap-0;
 	}
 
-	small {
-		@apply m-1 text-sm text-zinc-600;
-	}
-
 	:global(.dark) {
-		small {
-			@apply text-zinc-400;
-		}
-
 		.inputs {
 			@apply bg-zinc-700;
 			@apply border-zinc-700 focus-within:border-teal-600;

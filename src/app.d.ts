@@ -13,7 +13,7 @@ declare global {
 			session: Session | null;
 		}
 		interface Error {
-			errorId: string;
+			errorId?: string;
 			message: string;
 		}
 		// interface PageData {}
