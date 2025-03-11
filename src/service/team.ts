@@ -5,7 +5,7 @@ import type { NewTeam } from '$core/models/team';
 
 export const createTeam = async ({ id, ...newTeam }: NewTeam, createdBy: string) => {
 	const result = await collection.team.insertOne({
-		_id: new ObjectId(id),
+		_id: new ObjectId(),
 		...newTeam,
 		createdBy
 	});

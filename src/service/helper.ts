@@ -1,5 +1,5 @@
-import type { AnyRecord } from '@cotton-forms/common';
-import type { Document } from 'mongodb';
+import type { AnyRecord } from '$lib/helper/types';
+import { ObjectId, type Document } from 'mongodb';
 
 export const dataToMongodb = <I extends AnyRecord>(data: I) => {
 	const { id, ...doc } = data;
@@ -18,13 +18,14 @@ export const mongoDbToData = <I extends Document>(
 };
 
 export interface PaginationOptions {
-	page?: number;
-	size?: number;
+	skip?: number;
+	limit?: number;
 }
 
-export const getPagination = (options: PaginationOptions) => {
-	const page = options.page || 1;
-	const limit = options.size || 10;
-	const skip = (page - 1) * limit;
+export const definePagination = ({ skip = 0, limit = 10 }: PaginationOptions) => {
 	return { skip, limit };
+};
+
+export const idFromString = (id: string) => {
+	return ObjectId.createFromHexString(id);
 };

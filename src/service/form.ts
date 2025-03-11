@@ -9,7 +9,7 @@ import {
 	type NewFormRecord
 } from '$core/models/form';
 import { ObjectId, type WithId } from 'mongodb';
-import { getPagination, mongoDbToData, type PaginationOptions } from './helper';
+import { definePagination, idFromString, mongoDbToData, type PaginationOptions } from './helper';
 
 export const updateFormDefinitionByKey = async (
 	formDefinition: Omit<FormDefinition, 'id'>,
@@ -18,22 +18,24 @@ export const updateFormDefinitionByKey = async (
 	await collection.formDefinition.updateOne(
 		{
 			key: formDefinition.key,
-			teamId
+			teamId: idFromString(teamId)
 		},
 		{
 			$set: {
-				...formDefinition,
-				updatedAt: new Date()
+				...formDefinition
 			}
 		}
 	);
 };
 
-export const updateFormDefinition = async (definition: FormDefinition, teamId: string) => {
+export const updateFormDefinition = async (
+	definition: Omit<FormDefinition, 'key'>,
+	teamId: string
+) => {
 	await collection.formDefinition.updateOne(
 		{
 			_id: new ObjectId(definition.id),
-			teamId
+			teamId: ObjectId.createFromHexString(teamId)
 		},
 		{
 			$set: definition
@@ -48,7 +50,7 @@ export const createFormDefinition = async (
 	const data = {
 		...definition,
 		_id: new ObjectId(),
-		teamId,
+		teamId: idFromString(teamId),
 		createdAt: new Date(),
 		updatedAt: new Date()
 	};
@@ -92,10 +94,13 @@ export const getFormDefinitionByKey = async (key: string) => {
 	return mongoDbToData(result);
 };
 
-export const getFormDefinition = async (id: string, teamId: string) => {
+export const getFormDefinition = async (
+	id: string,
+	teamId: string
+): Promise<FormDefinition | null> => {
 	const result = await collection.formDefinition.findOne({
 		_id: new ObjectId(id),
-		teamId
+		teamId: idFromString(teamId)
 	});
 
 	if (!result) {
@@ -123,7 +128,7 @@ export const getFormRecords = async (
 	formId: FormDefinitionId,
 	options: PaginationOptions
 ): Promise<FormRecord[]> => {
-	const { skip, limit } = getPagination(options);
+	const { skip, limit } = definePagination(options);
 
 	const result = await collection.formRecord
 		.find({

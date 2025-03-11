@@ -3,6 +3,7 @@ import { sha256 } from '@oslojs/crypto/sha2';
 import { collection } from '$lib/server/db';
 import type { NewSession, Session } from '$core/models/session';
 import { ObjectId } from 'bson';
+import { idFromString } from './helper';
 
 export async function createSession(
 	token: string,
@@ -21,7 +22,7 @@ export async function createSession(
 		_id,
 		...newSession
 	});
-	return { id: _id.toString(), ...newSession };
+	return { id: result.insertedId.toString(), ...newSession };
 }
 
 export async function validateSessionToken(token: string): Promise<Session | null> {
@@ -35,6 +36,7 @@ export async function validateSessionToken(token: string): Promise<Session | nul
 		id: sessionRecord._id.toString(),
 		token: tokenHash,
 		userId: sessionRecord.userId,
+		activeTeamId: sessionRecord.activeTeamId,
 		expiresAt: new Date(sessionRecord.expiresAt)
 	};
 
@@ -51,6 +53,13 @@ export async function validateSessionToken(token: string): Promise<Session | nul
 		);
 	}
 	return session;
+}
+
+export async function switchActiveTeam(sessionId: string, teamId: string): Promise<void> {
+	await collection.session.updateOne(
+		{ _id: idFromString(sessionId) },
+		{ $set: { activeTeamId: teamId } }
+	);
 }
 
 export async function invalidateSession(token: string): Promise<void> {

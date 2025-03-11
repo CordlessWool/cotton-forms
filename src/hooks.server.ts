@@ -51,18 +51,17 @@ const sessionHandler: Handle = async ({ event, resolve }) => {
 	if (!sessionToken) {
 		return resolve(event);
 	}
-
 	const session = await validateSessionToken(sessionToken);
 
 	if (session) {
 		locals.session = session;
-		locals.teamId = session.activeTeamId ?? null;
+		locals.teamId = session.activeTeamId;
 		locals.userId = session.userId;
 	}
 
 	const result = await resolve(event);
 
-	if (result.status === 401) {
+	if (result.status === 401 && !event.url.pathname.startsWith('/api/')) {
 		redirect(303, '/auth/sign-in');
 	}
 

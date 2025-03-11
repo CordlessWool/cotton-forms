@@ -69,7 +69,6 @@ export const actions = {
 		}
 
 		const otp = await getOTPById(hash);
-		console.log(otp, form.data.token);
 		if (!verifyOTP(otp, form.data.token)) {
 			setError(form, 'token', 'Token is invalid or expired');
 			return fail(400, { form });

@@ -8,9 +8,9 @@ import type { Session } from '$core/models/session';
 declare global {
 	namespace App {
 		interface Locals {
-			userId: UserId | null;
-			teamId: TeamId | null;
-			session: Session | null;
+			userId?: UserId | null;
+			teamId?: TeamId | null;
+			session?: Session | null;
 		}
 		interface Error {
 			errorId?: string;

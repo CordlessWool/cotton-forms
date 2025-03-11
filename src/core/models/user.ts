@@ -1,10 +1,11 @@
 import { ObjectId } from 'bson';
 import type { WithId } from 'mongodb';
 import * as v from 'valibot';
+import { ObjectIdSchema } from './helper';
 
 export const UserTeamSchema = v.object({
 	teamId: v.string(),
-	role: v.literal('owner', 'dev')
+	role: v.literal('admin', 'dev')
 });
 
 export const UserSchema = v.object({
@@ -33,8 +34,9 @@ export const OTPVerificationSchema = v.object({
 });
 
 export const UserDatabaseSchema = v.object({
-	...v.omit(UserSchema, ['id']).entries,
+	...v.omit(UserSchema, ['id', 'defaultTeamId']).entries,
 	_id: v.string(),
+	defaultUserId: v.optional(ObjectIdSchema),
 	createdAt: v.date(),
 	updatedAt: v.date()
 });

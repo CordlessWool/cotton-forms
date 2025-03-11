@@ -7,7 +7,7 @@ import {
 	type UserDatabase
 } from '$core/models/user';
 import { ObjectId } from 'mongodb';
-import { mongoDbToData } from './helper';
+import { idFromString, mongoDbToData } from './helper';
 import type { APIKey, NewAPIKey } from '$core/models/apiKey';
 import type { TeamId } from '$core/models/team';
 
@@ -35,17 +35,6 @@ export const getUserByEmail = async (email: string): Promise<User | null> => {
 	return mongoDbToData(user);
 };
 
-export const addUserToTeam = async (data: UserTeam, userId: UserId) => {
-	const result = await collection.user.updateOne(
-		{ _id: new ObjectId(userId) },
-		{ $addToSet: { teams: data }, defaultTeamId: data.teamId }
-	);
-
-	if (!result.matchedCount) {
-		throw new Error('Failed to add group to user');
-	}
-};
-
 export const createUser = async ({ id, ...newUser }: NewUser): Promise<User> => {
 	const user: UserDatabase = {
 		_id: new ObjectId(id),
@@ -61,6 +50,20 @@ export const createUser = async ({ id, ...newUser }: NewUser): Promise<User> => 
 	}
 
 	return mongoDbToData(user);
+};
+
+export const addUserToTeam = async (userId: UserId, data: UserTeam, defaultTeam = false) => {
+	const result = await collection.user.updateOne(
+		{ _id: new ObjectId(userId) },
+		{
+			$addToSet: { teams: data },
+			...(defaultTeam ? { $set: { defaultTeamId: idFromString(data.teamId) } } : {})
+		}
+	);
+
+	if (!result.matchedCount) {
+		throw new Error('Failed to add group to user');
+	}
 };
 
 export const getAPIKeyByToken = async (token: string): Promise<APIKey | null> => {
