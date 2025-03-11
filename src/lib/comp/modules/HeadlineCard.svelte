@@ -1,35 +1,42 @@
 <script lang="ts">
-	import { Card } from '$lib/comp/core';
-	import type { ComponentProps, Snippet } from 'svelte';
+	import type { Snippet } from 'svelte';
 	import ButtonGroup from '../form/ButtonGroup.svelte';
+	import type { HTMLAttributes } from 'svelte/elements';
 	type Props = {
 		headline: string;
 		subline?: string;
 		actions?: Snippet;
-	} & Omit<ComponentProps<typeof Card>, 'children'>;
+	} & HTMLAttributes<HTMLElement>;
 
 	let { headline, subline, actions, ...props }: Props = $props();
 </script>
 
-<div {...props}>
-	<h1>{headline}</h1>
+<section {...props}>
+	<div>
+		<h1>{headline}</h1>
+		{#if subline}
+			<p>{subline}</p>
+		{/if}
+	</div>
 	{#if actions}
 		<ButtonGroup>
 			{@render actions?.()}
 		</ButtonGroup>
 	{/if}
-	{#if subline}
-		<p>{subline}</p>
-	{/if}
-</div>
+</section>
 
 <style lang="postcss">
 	@reference "tailwindcss/theme";
-	div {
+
+	h1 {
+		@apply mb-0;
+	}
+
+	section {
 		@apply col-span-full;
 		@apply grid items-center gap-5;
 		grid-template-columns: 1fr auto;
-		@apply px-3 py-2 pb-5;
+		@apply px-3 py-2;
 	}
 
 	p {
