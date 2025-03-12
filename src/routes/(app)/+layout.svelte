@@ -14,7 +14,6 @@
 
 <div class="layout">
 	<Sidebar>
-		<Button class="w-full"><Plus />Add Form</Button>
 		<SidebarList>
 			{#each data.forms as form (form.id)}
 				<SidebarItem href="/form/{form.id}">{form.name}</SidebarItem>
@@ -22,6 +21,7 @@
 		</SidebarList>
 		<SidebarList separate>
 			<SidebarItem href="/">Overview</SidebarItem>
+			<SidebarItem href="/forms">Forms</SidebarItem>
 			<SidebarItem href="/api-keys">API Keys</SidebarItem>
 		</SidebarList>
 		<ToggleTheme />

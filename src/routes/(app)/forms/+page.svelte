@@ -60,7 +60,7 @@
 						<InfoItem label={m.key()}>{key}<CopyButton content={key} /></InfoItem>
 					</ItemList>
 					<ButtonGroup vertical class="col-start-2">
-						<Anchor button href="/form/{id}" title={m.forms_open()}>
+						<Anchor button href="/forms/{id}" title={m.forms_open()}>
 							<FileText />
 						</Anchor>
 					</ButtonGroup>
