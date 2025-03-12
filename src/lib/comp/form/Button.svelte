@@ -1,8 +1,9 @@
 <script lang="ts">
+	import type { Snippet } from 'svelte';
 	import type { HTMLButtonAttributes } from 'svelte/elements';
 
 	type CustomProps = {
-		children: string;
+		children: Snippet;
 		transparent?: boolean;
 		inline?: boolean;
 		error?: boolean;

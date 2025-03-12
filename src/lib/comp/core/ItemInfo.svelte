@@ -25,15 +25,12 @@
 <style lang="postcss">
 	@reference "tailwindcss/theme";
 	li {
-		@apply flex max-w-fit flex-col gap-0;
+		/* padding and margin trick to not cuttong rings */
+		@apply -m-1 flex max-w-fit flex-col gap-0 overflow-hidden p-1;
 	}
 
 	small {
 		@apply font-mono;
 		@apply max-w-fit text-xs font-bold tracking-wider uppercase;
-	}
-
-	div {
-		@apply max-w-fit;
 	}
 </style>

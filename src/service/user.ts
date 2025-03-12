@@ -8,8 +8,9 @@ import {
 } from '$core/models/user';
 import { ObjectId } from 'mongodb';
 import { idFromString, mongoDbToData } from './helper';
-import type { APIKey, NewAPIKey } from '$core/models/apiKey';
+import type { ApiKey, NewApiKey } from '$core/models/apiKey';
 import type { TeamId } from '$core/models/team';
+import { dbToApiKey, dbToAPIKey } from '$core/logic/user';
 
 export const getUserById = async (id: UserId): Promise<User | null> => {
 	const user = await collection.user.findOne({
@@ -66,7 +67,7 @@ export const addUserToTeam = async (userId: UserId, data: UserTeam, defaultTeam 
 	}
 };
 
-export const getAPIKeyByToken = async (token: string): Promise<APIKey | null> => {
+export const getAPIKeyByToken = async (token: string): Promise<ApiKey | null> => {
 	const apiKey = await collection.apiKey.findOne({
 		token
 	});
@@ -104,30 +105,31 @@ export const getUserByAPIKeyAndOrgId = async (token: string) => {
 	return { user: mongoDbToData(user), teamId: apiKeyDocument.teamId };
 };
 
-export const getAPIKeys = async (teamId: TeamId) => {
+export const getApiKeys = async (teamId: TeamId) => {
 	const result = await collection.apiKey
 		.find({
-			teamId: teamId
+			teamId: new ObjectId(teamId)
 		})
 		.toArray();
-	return result;
+	return result.map(dbToApiKey);
 };
 
-export const createAPIKey = async ({ id, teamId, ...apiKeyDocument }: NewAPIKey) => {
+export const createApiKey = async ({ id, teamId, userId, ...apiKeyDocument }: NewApiKey) => {
 	const result = await collection.apiKey.insertOne({
 		_id: new ObjectId(id),
 		...apiKeyDocument,
-		teamId: teamId,
+		userId: new ObjectId(userId),
+		teamId: new ObjectId(teamId),
 		createdAt: new Date()
 	});
 	if (!result.insertedId) {
 		throw new Error('User not found');
 	}
 
-	return result.insertedId;
+	return result.insertedId.toString();
 };
 
-export const removeAPIKey = async (token: string, teamId: TeamId) => {
+export const deleteApiKey = async (token: string, teamId: TeamId) => {
 	const result = await collection.user.deleteOne({
 		token,
 		organizationId: teamId

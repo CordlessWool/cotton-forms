@@ -7,18 +7,18 @@
 	@apply leading-1;
 }
 
-.button.inline :global(svg) {
-	height: 1.1em;
-	width: 1.1em;
-}
-
 .button :global(svg) {
 	height: 1.375em;
 	width: 1.375em;
 }
 
+.button.inline :global(svg) {
+	height: 1.1em;
+	width: 1.1em;
+}
+
 .button.inline {
-	@apply mx-1 inline rounded-xs p-0;
+	@apply inline-block rounded-xs py-0;
 }
 
 .button:enabled {

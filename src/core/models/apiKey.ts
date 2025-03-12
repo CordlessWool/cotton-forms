@@ -1,19 +1,22 @@
-import { ObjectId } from "bson";
-import * as v from "valibot";
+import * as v from 'valibot';
+import { IdSchema, ObjectIdSchema } from './helper';
+import { ObjectId } from 'bson';
 
-export const APIKeySchema = v.object({
-  id: v.optional(v.string(), () => ObjectId.toString()),
-  token: v.string(),
-  userId: v.string(),
-  teamId: v.string(),
-  createdAt: v.optional(v.date(), () => new Date()),
+export const ApiKeySchema = v.object({
+	id: v.optional(IdSchema, () => ObjectId.toString()),
+	token: v.string(),
+	userId: IdSchema,
+	teamId: IdSchema,
+	createdAt: v.optional(v.date(), () => new Date())
 });
 
-export const APIKeyDatabaseSchema = v.object({
-  ...v.omit(APIKeySchema, ["id"]).entries,
-  _id: v.string(),
+export const ApiKeyDatabaseSchema = v.object({
+	...v.omit(ApiKeySchema, ['id', 'teamId', 'userId']).entries,
+	_id: ObjectIdSchema,
+	userId: ObjectIdSchema,
+	teamId: ObjectIdSchema
 });
 
-export type APIKey = v.InferOutput<typeof APIKeySchema>;
-export type NewAPIKey = v.InferInput<typeof APIKeySchema>;
-export type ApiKeyDatabase = v.InferOutput<typeof APIKeyDatabaseSchema>;
+export type ApiKey = v.InferOutput<typeof ApiKeySchema>;
+export type NewApiKey = v.InferInput<typeof ApiKeySchema>;
+export type ApiKeyDatabase = v.InferOutput<typeof ApiKeyDatabaseSchema>;
