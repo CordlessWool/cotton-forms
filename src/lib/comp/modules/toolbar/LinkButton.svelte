@@ -4,13 +4,14 @@
 
 	type Props = {
 		children: Snippet;
+		disabled?: boolean;
 	} & HTMLAnchorAttributes;
 
-	let { children, ...props }: Props = $props();
+	let { children, disabled = false, href, ...props }: Props = $props();
 </script>
 
 <li>
-	<a {...props}>
+	<a class:disabled href={disabled ? '#' : href} {...props}>
 		{@render children()}
 	</a>
 </li>
@@ -25,6 +26,10 @@
 
 	a {
 		@apply flex flex-row items-center gap-1 bg-teal-400 px-3 py-2 focus:outline-none dark:bg-teal-700;
+	}
+
+	a.disabled {
+		@apply cursor-not-allowed opacity-50;
 	}
 
 	a :global(svg) {

@@ -1,7 +1,4 @@
-import { writable } from 'svelte/store';
-import { setContext, getContext } from 'svelte';
-
-const NOTIFICATION_CONTEXT = Symbol('notifications');
+import { writable, type Writable } from 'svelte/store';
 
 export interface Notification {
 	id: number;
@@ -10,47 +7,37 @@ export interface Notification {
 	dismissable: boolean;
 }
 
-export interface NotifierStore {
-	subscribe: (
-		run: (value: Notification[]) => void,
-		invalidate?: (value?: Notification[]) => void
-	) => () => void;
+const writableBase = writable<Notification[]>([]);
+const notifications = {
+	add: (notification: Notification) => {
+		writableBase.update((n) => [...n, notification]);
+	},
+	remove: (id: number) => {
+		writableBase.update((n) => n.filter((notification) => notification.id !== id));
+	},
+	subscribe: writableBase.subscribe
+};
+
+export const notifier = {
+	...writableBase,
+	error: (message?: string, dismissable = true) => {
+		notifications.add({
+			id: Date.now(),
+			type: 'error',
+			message: message ?? 'An unexpected error occurred',
+			dismissable
+		});
+	},
+	add: (notification: Notification) => {
+		writableBase.update((n) => [...n, notification]);
+	},
+	remove: (id: number) => {
+		writableBase.update((n) => n.filter((notification) => notification.id !== id));
+	}
+} satisfies Writable<Notification[]> & {
+	error: (message?: string, dismissable?: boolean) => void;
 	add: (notification: Notification) => void;
 	remove: (id: number) => void;
-}
-
-export const initNotifierContext = (): NotifierStore => {
-	const writableBase = writable<Notification[]>([]);
-	const notifications = {
-		add: (notification: Notification) => {
-			writableBase.update((n) => [...n, notification]);
-		},
-		remove: (id: number) => {
-			writableBase.update((n) => n.filter((notification) => notification.id !== id));
-		},
-		subscribe: writableBase.subscribe
-	};
-	setContext(NOTIFICATION_CONTEXT, notifications);
-	return notifications;
 };
 
-export const getNotifierContext = () => {
-	return getContext<NotifierStore>(NOTIFICATION_CONTEXT);
-};
-
-export const getNotifier = () => {
-	const notifications = getNotifierContext();
-
-	return {
-		error: (message?: string, dismissable = true) => {
-			notifications.add({
-				id: Date.now(),
-				type: 'error',
-				message: message ?? 'An unexpected error occurred',
-				dismissable
-			});
-		}
-	};
-};
-
-export type Notifier = ReturnType<typeof getNotifier>;
+export type Notifier = typeof notifier;

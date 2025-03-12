@@ -1,5 +1,7 @@
-import type { FormSchema } from '$core/models/form/index';
+import type { FormDefinition, FormDefinitionDatabase, FormSchema } from '$core/models/form/index';
 import type { AnyRecord } from '$lib/helper/types';
+import { ObjectId } from 'bson';
+import { omit } from '$lib/helper/records';
 
 export const convertFormSchemaToLabels = (schema: FormSchema[]): [string, string][] => {
 	return schema.map((schema) => {
@@ -21,4 +23,24 @@ export const calculateFormLabels = (
 
 export const compareSchema = (schema1: FormSchema[], schema2: FormSchema[]): boolean => {
 	return JSON.stringify(schema1) === JSON.stringify(schema2);
+};
+
+export const formDefinitionToDb = (
+	definition: FormDefinition,
+	teamId: string
+): FormDefinitionDatabase => {
+	return {
+		createdAt: new Date(),
+		updatedAt: new Date(),
+		...omit(definition, ['id']),
+		_id: new ObjectId(),
+		teamId: new ObjectId(teamId)
+	};
+};
+
+export const dbToFormDefinition = (definition: FormDefinitionDatabase): FormDefinition => {
+	return {
+		...omit(definition, ['_id', 'teamId']),
+		id: definition._id.toString()
+	};
 };

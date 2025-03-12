@@ -10,6 +10,7 @@ import {
 } from '$core/models/form';
 import { ObjectId, type WithId } from 'mongodb';
 import { definePagination, idFromString, mongoDbToData, type PaginationOptions } from './helper';
+import { dbToFormDefinition } from '$core/logic/form';
 
 export const updateFormDefinitionByKey = async (
 	formDefinition: Omit<FormDefinition, 'id'>,
@@ -44,6 +45,7 @@ export const updateFormDefinition = async (
 };
 
 export const createFormDefinition = async (
+	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	{ id, ...definition }: FormDefinition,
 	teamId: string
 ) => {
@@ -58,6 +60,7 @@ export const createFormDefinition = async (
 	const result = await collection.formDefinition.insertOne(data);
 
 	if (result.insertedId) {
+		// eslint-disable-next-line @typescript-eslint/no-unused-vars
 		const { _id, ...saved } = data;
 		return {
 			id: result.insertedId.toString(),
@@ -107,14 +110,15 @@ export const getFormDefinition = async (
 		return null;
 	}
 
-	return mongoDbToData(result);
+	return dbToFormDefinition(result);
 };
 
 export const getAllFormDefinitions = async (teamId: string) => {
-	const result = await collection.formDefinition.find({ teamId }).toArray();
-	return result.map(mongoDbToData);
+	const result = await collection.formDefinition.find({ teamId: idFromString(teamId) }).toArray();
+	return result.map(dbToFormDefinition);
 };
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const createFormRecord = async ({ id, ...data }: NewFormRecord) => {
 	const validated = v.parse(FromRecordSchema, {
 		_id: new ObjectId(),

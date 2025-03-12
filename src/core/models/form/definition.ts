@@ -1,7 +1,7 @@
 import * as v from 'valibot';
 import { nanoid } from 'nanoid';
 import { ObjectId } from 'bson';
-import { ObjectIdSchema } from '../helper';
+import { IdSchema, ObjectIdSchema } from '../helper';
 
 export enum FieldType {
 	text = 'text',
@@ -81,7 +81,7 @@ export const FieldSchema = v.union([
 export type Fields = v.InferInput<typeof FieldSchema>;
 
 export const FormDefinitionSchema = v.object({
-	id: v.optional(v.string(), () => ObjectId.toString()),
+	id: v.optional(IdSchema, () => ObjectId.toString()),
 	key: v.optional(v.pipe(v.string(), v.nanoid()), () => nanoid()),
 	name: v.optional(v.string()),
 	description: v.optional(v.string()),

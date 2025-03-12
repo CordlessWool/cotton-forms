@@ -52,15 +52,15 @@
 				oncreated={(data: FormDefinition) => replaceForm(data, def)}
 			/>
 		{:else}
-			{@const { name, key, description } = def}
+			{@const { id, name, key, description } = def}
 			<Card>
-				<div class="grid-cols-[1fr min] grid grid-flow-col">
+				<div class="grid-cols-[1fr min] grid grid-flow-row gap-5">
 					<ItemList>
 						<InfoItem label={m.name()} ref={name}>{name}</InfoItem>
 						<InfoItem label={m.key()}>{key}<CopyButton content={key} /></InfoItem>
 					</ItemList>
-					<ButtonGroup vertical>
-						<Anchor button href="/form/{key}" title={m.forms_open()}>
+					<ButtonGroup vertical class="col-start-2">
+						<Anchor button href="/form/{id}" title={m.forms_open()}>
 							<FileText />
 						</Anchor>
 					</ButtonGroup>
@@ -79,6 +79,6 @@
 	@reference "tailwindcss/theme";
 
 	main {
-		@apply grid auto-rows-min gap-5 md:grid-cols-2 xl:grid-cols-3;
+		@apply grid auto-rows-min gap-5 lg:grid-cols-2 2xl:grid-cols-3;
 	}
 </style>

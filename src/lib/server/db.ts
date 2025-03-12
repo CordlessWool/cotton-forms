@@ -31,7 +31,7 @@ export const collection = {
 };
 
 collection.formDefinition.createIndex({ key: 1 }, { unique: true });
-collection.formDefinition.createIndex({ userId: 1 });
+collection.formDefinition.createIndex({ teamId: 1 });
 collection.formRecord.createIndex({ formId: 1 });
 collection.formRecord.createIndex({ uniqueness: 1 }, { unique: true });
 collection.formRecord.createIndex({ formId: 1, labels: 1 });

@@ -11,7 +11,14 @@
 	"forms_overview_title": "Forms",
 	"forms_add": "Add Form",
 	"forms_create_new": "Create New Form",
+	"forms_open": "Open Form",
+	"team_create": "Create Team",
+	"team_create_title": "Create a Team",
 	"create": "Create",
 	"add": "Add",
-	"save": "Save"
+	"save": "Save",
+	"name": "Name",
+	"description": "Description",
+	"key": "Key",
+	"value": "Value"
 }

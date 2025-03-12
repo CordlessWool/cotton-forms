@@ -33,7 +33,7 @@
 		<SuperTextarea label="Description" {form} name="description" />
 		<ButtonGroup>
 			<Button type="submit"><BookPlus />{m.forms_add()}</Button>
-			<Button type="button" danger onclick={onremoved}>
+			<Button type="button" danger onclick={() => onremoved?.()}>
 				<Trash2 />
 			</Button>
 		</ButtonGroup>

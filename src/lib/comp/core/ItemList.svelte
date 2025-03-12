@@ -17,7 +17,7 @@
 <style lang="postcss">
 	@reference "tailwindcss/theme";
 	ul {
-		@apply grid grid-flow-row content-between gap-7;
+		@apply grid grid-flow-row content-between gap-5;
 	}
 
 	ul.wrap {
