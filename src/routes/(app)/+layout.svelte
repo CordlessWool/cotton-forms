@@ -2,8 +2,7 @@
 	import type { Snippet } from 'svelte';
 	import type { LayoutData } from './$types';
 	import { Sidebar, SidebarItem, ToggleTheme, SidebarList } from '$lib/comp/layout';
-	import { Button } from '$lib/comp/form';
-	import { Plus } from 'lucide-svelte';
+
 	type Props = {
 		data: LayoutData;
 		children: Snippet;
@@ -16,7 +15,7 @@
 	<Sidebar>
 		<SidebarList>
 			{#each data.forms as form (form.id)}
-				<SidebarItem href="/form/{form.id}">{form.name}</SidebarItem>
+				<SidebarItem href="/forms/{form.id}">{form.name}</SidebarItem>
 			{/each}
 		</SidebarList>
 		<SidebarList separate>

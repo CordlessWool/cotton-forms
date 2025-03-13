@@ -19,6 +19,7 @@ export const getOTPById = async (id: string): Promise<OTP | null> => {
 	return mongoDbToData(result);
 };
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const createOTP = async ({ id, ...newOTP }: NewOTP): Promise<OTPId> => {
 	const result = await collection.otp.insertOne({
 		_id: new ObjectId(),

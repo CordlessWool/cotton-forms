@@ -1,5 +1,5 @@
 import { sequence } from '@sveltejs/kit/hooks';
-import { error, redirect, type Handle, type HandleServerError } from '@sveltejs/kit';
+import { redirect, type Handle, type HandleServerError } from '@sveltejs/kit';
 import { i18n } from '$lib/i18n';
 import { getSessionTokenCookie } from '$lib/server/auth';
 import { validateSessionToken } from '$service/session';
@@ -30,19 +30,6 @@ const corsHandler: Handle = async ({ event, resolve }) => {
 	}
 
 	return response;
-};
-
-const apiHandler: Handle = async ({ event, resolve }) => {
-	if (event.url.pathname.startsWith('/api/')) {
-		const token = event.cookies.get('x-api-token');
-		if (!token) {
-			error(401, {
-				message: 'Unauthorized',
-				errorId: crypto.randomUUID()
-			});
-		}
-	}
-	return resolve(event);
 };
 
 const sessionHandler: Handle = async ({ event, resolve }) => {
