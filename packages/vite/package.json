@@ -1,0 +1,39 @@
+{
+  "name": "@cotton-forms/vite",
+  "version": "0.1.0",
+  "module": "dist/index.js",
+  "type": "module",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsup"
+  },
+  "files": [
+    "dist"
+  ],
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/lib.d.ts",
+        "import": "./dist/lib.js"
+      },
+      "require": {
+        "types": "./dist/lib.d.cts",
+        "require": "./dist/lib.cjs"
+      }
+    }
+  },
+  "devDependencies": {
+    "@types/bun": "latest",
+    "publint": "^0.3.6",
+    "tsup": "^8.4.0"
+  },
+  "peerDependencies": {
+    "typescript": "^5.7.3",
+    "vite": "^6.2.0"
+  },
+  "dependencies": {
+    "@cotton-forms/server": "link:@cotton-forms/server",
+    "@elysiajs/eden": "^1.2.0",
+    "valibot": "^1.0.0-rc.2"
+  }
+}
