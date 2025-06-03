@@ -1,0 +1,24 @@
+{
+  "$schema": "https://turbo.build/schema.json",
+  "tasks": {
+    "dev:lib": {
+      "persistent": true,
+      "cache": false,
+      "outputs": ["dist"]
+    },
+    "dev": {
+      "persistent": true,
+      "cache": false,
+      "outputs": ["dist"]
+    },
+    "build:app": {
+      "outputs": ["dist/**"]
+    },
+    "build:lib": {
+      "outputs": ["dist/**"]
+    },
+    "check-types": {
+      "dependsOn": ["^check-types"]
+    }
+  }
+}
