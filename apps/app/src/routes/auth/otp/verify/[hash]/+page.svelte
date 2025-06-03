@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { superForm } from 'sveltekit-superforms/client';
 	import type { PageData } from './$types';
-	import { ShieldCheck, Send, Shell, CircleX } from 'lucide-svelte';
+	import { ShieldCheck, Send, Shell, CircleX } from '@lucide/svelte';
 	import { InputFrame, KeyInput, Button, ThemeHiddenInput } from '$lib/comp/form';
 	import * as m from '$lib/paraglide/messages';
 

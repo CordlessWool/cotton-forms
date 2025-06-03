@@ -6,7 +6,7 @@
 	import { valibotClient } from 'sveltekit-superforms/adapters';
 	import * as m from '$lib/paraglide/messages';
 	import { TeamSchema } from '$core/models/team';
-	import { Users } from 'lucide-svelte';
+	import { Users } from '@lucide/svelte';
 	import { notifier } from '$lib/comp/notifier';
 
 	let { data }: { data: PageData } = $props();

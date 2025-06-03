@@ -2,7 +2,7 @@
 	import { FormDefinitionSchema, type FormDefinition } from '$core/models/form';
 	import { Card } from '$lib/comp/core';
 	import { InputFrame, Button, ButtonGroup, SuperInput, Form, SuperTextarea } from '$lib/comp/form';
-	import { BookPlus, Trash2 } from 'lucide-svelte';
+	import { BookPlus, Trash2 } from '@lucide/svelte';
 	import * as m from '$lib/paraglide/messages';
 
 	import { superForm, type SuperValidated } from 'sveltekit-superforms';

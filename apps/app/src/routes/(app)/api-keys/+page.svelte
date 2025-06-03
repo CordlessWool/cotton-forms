@@ -2,7 +2,7 @@
 	import { Card, InfoItem, ItemList } from '$lib/comp/core';
 	import { Button } from '$lib/comp/form';
 	import { CopyButton, HeadlineCard } from '$lib/comp/modules';
-	import { Plus } from 'lucide-svelte';
+	import { Plus } from '@lucide/svelte';
 	import type { ApiKey } from '$core/models/apiKey';
 
 	import type { PageData } from './$types';

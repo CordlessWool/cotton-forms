@@ -2,7 +2,7 @@
 	import { Card, InfoItem, Anchor } from '$lib/comp/core';
 	import { Button } from '$lib/comp/form';
 	import * as m from '$lib/paraglide/messages';
-	import { FileText, Plus } from 'lucide-svelte';
+	import { FileText, Plus } from '@lucide/svelte';
 	import type { PageData } from './$types';
 
 	import { CopyButton, HeadlineCard } from '$lib/comp/modules';

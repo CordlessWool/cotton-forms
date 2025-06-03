@@ -8,7 +8,7 @@
 		ToolbarLinkButton,
 		Toolbar
 	} from '$lib/comp/modules';
-	import { File } from 'lucide-svelte';
+	import { File } from '@lucide/svelte';
 	import type { PageData } from './$types';
 	import * as m from '$lib/paraglide/messages';
 	import type { FormRecord } from '$core/models/form';

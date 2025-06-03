@@ -1,6 +1,6 @@
 <script>
 	import * as m from '$lib/paraglide/messages';
-	import { Github } from 'lucide-svelte';
+	import { Github } from '@lucide/svelte';
 </script>
 
 <footer>

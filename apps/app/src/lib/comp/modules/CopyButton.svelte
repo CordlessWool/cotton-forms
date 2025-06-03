@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Copy } from 'lucide-svelte';
+	import { Copy } from '@lucide/svelte';
 	import { Button } from '../form';
 	import type { ComponentProps, Snippet } from 'svelte';
 

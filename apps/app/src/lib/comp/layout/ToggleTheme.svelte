@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { Toggle } from '$lib/comp/form';
-	import { Sun, Moon } from 'lucide-svelte';
+	import { Sun, Moon } from '@lucide/svelte';
 	import { theme as themeStore } from '$lib/stores';
 
 	const toggle = () => {

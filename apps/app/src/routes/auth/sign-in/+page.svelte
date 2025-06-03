@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { InputFrame, Button, SuperInput, Form } from '$lib/comp/form';
-	import { Mail, Key } from 'lucide-svelte';
+	import { Mail, Key } from '@lucide/svelte';
 	import type { PageData } from './$types';
 	import { superForm } from 'sveltekit-superforms';
 	import { valibot } from 'sveltekit-superforms/adapters';
