@@ -38,5 +38,5 @@ collection.formRecord.createIndex({ formId: 1, labels: 1 });
 collection.user.createIndex({ email: 1 }, { unique: true });
 collection.session.createIndex({ expiresAt: 1 }, { expireAfterSeconds: 0 });
 collection.session.createIndex({ token: 1 }, { unique: true });
-collection.otp.createIndex({ email: 1 }, { unique: true });
+// collection.otp.createIndex({ email: 1 }, { unique: true });
 collection.otp.createIndex({ expiresAt: 1 }, { expireAfterSeconds: 0 });

@@ -1,13 +1,9 @@
 <script>
 	import * as m from '$lib/paraglide/messages';
-	import { page } from '$app/state';
-	import { i18n } from '$lib/i18n';
 	import { Github } from 'lucide-svelte';
 </script>
 
 <footer>
-	<a rel="alternative" hreflang="en" href={i18n.route(page.url.pathname)}>EN</a>
-	<a rel="alternative" hreflang="de" href={i18n.route(page.url.pathname)}>DE</a>
 	<a
 		title={m.github_link_title()}
 		href="https://github.com/CordlessWool/shrtn"

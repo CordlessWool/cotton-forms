@@ -1,10 +1,16 @@
 import { sequence } from '@sveltejs/kit/hooks';
 import { redirect, type Handle, type HandleServerError } from '@sveltejs/kit';
-import { i18n } from '$lib/i18n';
 import { getSessionTokenCookie } from '$lib/server/auth';
 import { validateSessionToken } from '$service/session';
+import { paraglideMiddleware } from '$lib/paraglide/server';
 
-const handleParaglide: Handle = i18n.handle();
+const paraglideHandle: Handle = ({ event, resolve }) =>
+	paraglideMiddleware(event.request, ({ request: localizedRequest, locale }) => {
+		event.request = localizedRequest;
+		return resolve(event, {
+			transformPageChunk: ({ html }) => html.replace('%lang%', locale)
+		});
+	});
 
 const corsHandler: Handle = async ({ event, resolve }) => {
 	const response = await resolve(event);
@@ -55,7 +61,7 @@ const sessionHandler: Handle = async ({ event, resolve }) => {
 	return result;
 };
 
-export const handle: Handle = sequence(corsHandler, handleParaglide, sessionHandler);
+export const handle: Handle = sequence(corsHandler, paraglideHandle, sessionHandler);
 
 export const handleErrors: HandleServerError = async ({ message }) => {
 	const errorId = crypto.randomUUID();

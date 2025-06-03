@@ -1,7 +1,12 @@
 import { goto } from '$app/navigation';
-import { i18n } from '$lib/i18n';
 import type { HandleClientError } from '@sveltejs/kit';
-export const reroute = i18n.reroute();
+
+import type { Reroute } from '@sveltejs/kit';
+import { deLocalizeUrl } from '$lib/paraglide/runtime';
+
+export const reroute: Reroute = (request) => {
+	return deLocalizeUrl(request.url).pathname;
+};
 
 export const handleError: HandleClientError = async ({ status, message }) => {
 	if (status === 401) {
