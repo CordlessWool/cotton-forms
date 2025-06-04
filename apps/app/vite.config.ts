@@ -15,14 +15,6 @@ export default defineConfig({
 			strategy: ['cookie', 'baseLocale']
 		})
 	],
-	optimizeDeps: {
-		esbuildOptions: {
-			target: 'esnext'
-		}
-	},
-	build: {
-		target: 'esnext'
-	},
 	test: {
 		workspace: [
 			{
