@@ -3,6 +3,7 @@ import { redirect, type Handle, type HandleServerError } from '@sveltejs/kit';
 import { getSessionTokenCookie } from '$lib/server/auth';
 import { validateSessionToken } from '$service/session';
 import { paraglideMiddleware } from '$lib/paraglide/server';
+import { getUserById } from '$service/user';
 
 const paraglideHandle: Handle = ({ event, resolve }) =>
 	paraglideMiddleware(event.request, ({ request: localizedRequest, locale }) => {
@@ -48,8 +49,8 @@ const sessionHandler: Handle = async ({ event, resolve }) => {
 
 	if (session) {
 		locals.session = session;
-		locals.teamId = session.activeTeamId;
-		locals.userId = session.userId;
+		locals.activeTeamId = session.activeTeamId;
+		locals.user = await getUserById(session.userId);
 	}
 
 	const result = await resolve(event);

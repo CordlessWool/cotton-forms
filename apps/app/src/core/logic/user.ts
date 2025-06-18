@@ -1,5 +1,6 @@
 import type { ApiKey, ApiKeyDatabase, NewApiKey } from '$core/models/apiKey';
 import type { TeamId } from '$core/models/team';
+import type { PublicUser, User } from '$core/models/user';
 import { omit } from '$lib/helper/records';
 import { ObjectId } from 'bson';
 import { nanoid } from 'nanoid';
@@ -9,6 +10,15 @@ export const generateApiKey = (userId: string, teamId: string): NewApiKey => {
 		token: nanoid(61),
 		userId,
 		teamId
+	};
+};
+
+export const sinitizeUserForClient = (user: User): PublicUser => {
+	return {
+		id: user.id.toString(),
+		email: user.email,
+		name: user.name,
+		avatar: user.image
 	};
 };
 

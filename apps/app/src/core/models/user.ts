@@ -33,6 +33,13 @@ export const OTPVerificationSchema = v.object({
 	otp: v.string()
 });
 
+export const UserPublicSchema = v.object({
+	id: v.string(),
+	email: v.string(),
+	name: v.string(),
+	avatar: v.optional(v.string())
+});
+
 export const UserDatabaseSchema = v.object({
 	...v.omit(UserSchema, ['id', 'defaultTeamId']).entries,
 	_id: v.string(),
@@ -47,5 +54,6 @@ export type UserDatabase = WithId<Omit<v.InferOutput<typeof UserDatabaseSchema>,
 export type OTPVerification = v.InferInput<typeof OTPVerificationSchema>;
 export type UserTeam = v.InferOutput<typeof UserTeamSchema>;
 export type User = v.InferOutput<typeof UserSchema>;
+export type PublicUser = v.InferOutput<typeof UserPublicSchema>;
 export type NewUser = v.InferInput<typeof UserSchema>;
 export type UserId = User['id'];

@@ -40,25 +40,25 @@ export enum AUTH {
 export function isAuthorized(
 	locals: App.Locals,
 	type: AUTH.NO_TEAM
-): asserts locals is PickNonNullable<App.Locals, 'userId' | 'session'>;
+): asserts locals is PickNonNullable<App.Locals, 'user' | 'session'>;
 export function isAuthorized(
 	locals: App.Locals,
 	type?: AUTH.TEAM_AND_USER
-): asserts locals is PickNonNullable<App.Locals, 'userId' | 'teamId' | 'session'>;
+): asserts locals is PickNonNullable<App.Locals, 'user' | 'activeTeamId' | 'session'>;
 export function isAuthorized(
 	locals: App.Locals,
 	type: AUTH = AUTH.TEAM_AND_USER
-): asserts locals is PickNonNullable<App.Locals, 'userId' | 'teamId' | 'session'> {
-	if (locals.session == null) {
+): asserts locals is PickNonNullable<App.Locals, 'user' | 'activeTeamId' | 'session'> {
+	if (locals.session == null || locals.user == null) {
 		redirect(302, '/auth/sign-in');
 	}
-	if (type === AUTH.TEAM_AND_USER && (locals.userId == null || locals.teamId == null)) {
-		if (locals.teamId == null) {
+	if (type === AUTH.TEAM_AND_USER && (locals.user?.id == null || locals.activeTeamId == null)) {
+		if (locals.activeTeamId == null) {
 			//TODO: think about this and other solutions
 			redirect(302, '/auth/team/create');
 		}
 		redirect(302, '/auth/sign-in');
-	} else if (type === AUTH.NO_TEAM && locals.userId == null) {
+	} else if (type === AUTH.NO_TEAM && locals.user?.id == null) {
 		redirect(302, '/auth/sign-in');
 	}
 }

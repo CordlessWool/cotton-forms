@@ -1,15 +1,15 @@
 // See https://svelte.dev/docs/kit/types#app.d.ts
 
-import type { UserId } from '$core/models/user';
 import type { TeamId } from '$core/models/team';
 import type { Session } from '$core/models/session';
+import type { User } from '$core/models/user';
 
 // for information about these interfaces
 declare global {
 	namespace App {
 		interface Locals {
-			userId: UserId | null | undefined;
-			teamId: TeamId | null | undefined;
+			user: User | null | undefined;
+			activeTeamId: TeamId | null | undefined;
 			session: Session | null | undefined;
 		}
 		interface Error {
