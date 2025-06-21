@@ -81,7 +81,7 @@ export const FieldSchema = v.union([
 export type Fields = v.InferInput<typeof FieldSchema>;
 
 export const FormDefinitionSchema = v.object({
-	id: v.optional(IdSchema, () => ObjectId.toString()),
+	id: v.optional(IdSchema, () => new ObjectId().toString()),
 	key: v.optional(v.pipe(v.string(), v.nanoid()), () => nanoid()),
 	name: v.optional(v.string()),
 	description: v.optional(v.string()),
