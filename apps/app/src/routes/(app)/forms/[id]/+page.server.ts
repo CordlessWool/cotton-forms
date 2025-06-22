@@ -7,7 +7,7 @@ export const load: PageServerLoad = async ({ params, locals }) => {
 	isAuthorized(locals);
 
 	const { id } = params;
-	const definition = await getFormDefinition(id, locals.teamId);
+	const definition = await getFormDefinition(id, locals.activeTeamId);
 
 	if (!definition) {
 		error(404, 'Form not found');
