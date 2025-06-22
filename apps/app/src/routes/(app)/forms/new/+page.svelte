@@ -5,23 +5,26 @@
 	import { Input } from '$lib/comp/ui/input/index.js';
 	import * as m from '$lib/paraglide/messages';
 	import { Textarea } from '$lib/comp/ui/textarea/index.js';
-	import { superForm, type SuperValidated } from 'sveltekit-superforms';
+	import { superForm } from 'sveltekit-superforms';
 	import { valibotClient } from 'sveltekit-superforms/adapters';
 	import type { PageData } from './$types';
+	import { ClipboardPlus } from '@lucide/svelte';
 
 	let { data }: { data: PageData } = $props();
 
 	const form = superForm(data.createForm, {
 		validators: valibotClient(FormDefinitionSchema)
 	});
-	const { form: formData } = form;
+	const { form: formData, errors } = form;
+	errors.subscribe(console.error);
+	formData.subscribe(console.log);
 </script>
 
 <FForm {form} action="?/create">
 	<Form.Field {form} name="name">
 		<Form.Control>
 			{#snippet children({ props })}
-				<Form.Label>Username</Form.Label>
+				<Form.Label>Name</Form.Label>
 				<Input {...props} bind:value={$formData.name} />
 			{/snippet}
 		</Form.Control>
@@ -30,13 +33,13 @@
 	<Form.Field {form} name="description">
 		<Form.Control>
 			{#snippet children({ props })}
-				<Form.Label>Username</Form.Label>
+				<Form.Label>Description</Form.Label>
 				<Textarea {...props} bind:value={$formData.description} />
 			{/snippet}
 		</Form.Control>
 		<Form.FieldErrors />
 	</Form.Field>
-	<Form.Button>Submit</Form.Button>
+	<Form.Button type="submit"><ClipboardPlus />{m.forms_add()}</Form.Button>
 	<!-- <InputFrame label="Name" for="create-name">
 		<SuperInput {form} id="create-name" name="name" />
 	</InputFrame>
